@@ -1,0 +1,47 @@
+/* Import common styles. MDN Reference:
+https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
+@import url(common.css);
+
+.intro-section {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.intro-card {
+    background-color: var(--primary-grey);
+    border-radius: 30px;
+    color: white;
+    padding: 10px;
+
+    width: 90%;
+}
+
+.intro-card button {
+    background-color: var(--primary-red);
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 40px;
+    color: inherit;
+}
+
+.intro-video {
+    border-radius: 30px;
+    width: 100%;
+}
+
+.popular-section {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.popular-section h2 {
+    font-weight: 500;
+    font-size: 40px;
+}
+
+.popular-section h3 {
+    font-weight: 300;
+    letter-spacing: 1px;
+}

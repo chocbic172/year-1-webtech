@@ -1,0 +1,22 @@
+- [ ] Follows brief
+- [x] Wireframe
+- [x] Applies HTML Appropriately
+- [ ] External CSS Applied consistently
+- [ ] Contains Home, Product, Cart and Item "views"
+- [ ] Has Iframe for YouTube Video
+- [ ] Has README Following Requirements
+- [ ] Lab Demo
+- [ ] HTML and CSS Pass Validation
+- [x] Clean and Commented Code
+- [x] Method to Navigate within view
+- [ ] Responsive Design
+- [x] Clear Navigation
+- [ ] Best CSS Practices
+- [ ] Manipulating the DOM
+- [ ] Advanced Responsive Design
+- [ ] HTML5 Semantic Elements
+- [ ] Shopping Cart Implemented
+- [ ] HTML5 API Integration
+- [ ] Extended Shopping Cart Feature
+- [ ] Professional Prototype with No Usability Flaws
+- [x] Version Control

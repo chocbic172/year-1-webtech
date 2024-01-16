@@ -1,0 +1,154 @@
+/* Styles common to all pages on the website */
+
+:root {
+    /* CSS properties ("variables") are used to encourage
+    declarative programming and maintainability. MDN Reference:
+    https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+    */
+    --primary-red: #BE1622;
+    --primary-blue: #007FB0;
+    --primary-grey: #34516C;
+
+    --navbar-height: 100px;
+}
+
+body {
+    font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
+    margin: 0;
+}
+
+/* 
+  Navigation Bar Styles
+*/
+
+/* Clearfix offsets the content below the floating navbar */
+.navbar-clearfix {
+    height: var(--navbar-height);
+    width: 100%;
+}
+
+.navbar {
+    background-color: var(--primary-blue);
+    color: white;
+    font-weight: 600;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    font-size: 1.25em;
+    font-weight: 500;
+    letter-spacing: 1px;
+
+    display: table;
+}
+
+.navbar table {
+    width: 100%;
+}
+
+.navbar-col {
+    width: 20%;
+    display: table-cell;
+}
+
+/* The important keyword allows us to override other styles.
+This is used several times below. MDN Reference:
+https://developer.mozilla.org/en-US/docs/Web/CSS/important */
+.nav-section-main {
+    width: 60%!important;
+}
+
+.navigation-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-logo {
+    font-weight: 400;
+    font-size: 24px;
+    padding: 4px 24px!important;
+}
+
+.navbar a {
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    padding: 14px 24px;
+}
+
+/* Underline slide effect on hover
+
+Animates the width of the CSS ::after pseudo-element on links
+in the Navigation Bar. Styles change when the :hover pseudo-class
+is activated (i.e. the cursor is over the element). MDN References:
+https://developer.mozilla.org/en-US/docs/Web/CSS/::after
+https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
+*/
+
+.navbar a::after {
+    content: "";
+    border-bottom: 2px solid white;
+
+    display: block;
+    position: relative;
+    bottom: 0;
+    left:0;
+    width: 0;
+
+    transition: width 0.25s;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+/* Presets for CSS layouts. The CSS "table" layout system is used
+for large level layouts, and the "flexbox" system is used for widgets
+and smaller items. MDN Reference:
+https://developer.mozilla.org/en-US/docs/Web/CSS/display */
+
+.row {
+    display: table;
+}
+
+.col-40 {
+    width: 40%;
+    float: left;
+}
+
+.col-60 {
+    width: 60%;
+    float: left;
+}
+
+/* This is used to create a container where the
+content is horizontally centered */
+.flex-content-center {
+    display: flex;
+    justify-content: center;
+}
+
+/* 
+  Footer Styles
+*/
+
+footer {
+    display: flex;
+    align-items: center;
+
+    background-color: var(--primary-grey);
+    color: white;
+
+    height: 120px;
+    padding-left: 30px;
+}
+
+footer p {
+    font-weight: 300;
+    font-size: 24px;
+}
