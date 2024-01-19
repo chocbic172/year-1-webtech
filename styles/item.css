@@ -46,3 +46,28 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 #item-cart-button.added {
     background-color: var(--forest);
 }
+
+/* 
+  Responsive Styles
+*/
+@media (max-width: 1024px) {
+    #item-img {
+        max-width: 98%;
+    }
+
+    #item-desc {
+        text-align: center;
+    }
+
+    #item-price {
+        text-align: center;
+    }
+
+    #item-title {
+        text-align: center;
+    }
+
+    #item-cart-button {
+        width: 100%;
+    }
+}

@@ -67,7 +67,7 @@ CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
 }
 
 .product-row {
-    width: 1024px;
+    max-width: 1024px;
     margin: auto;
 }
 
@@ -91,4 +91,10 @@ CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
 .product img {
     padding: 5px;
     width: 70%;
+}
+
+@media (max-width: 1024px) {
+    .product-row {
+        width: 100%;
+    }
 }
