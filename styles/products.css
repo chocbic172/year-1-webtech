@@ -1,0 +1,93 @@
+/* Import common styles. MDN Reference:
+https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
+@import url(common.css);
+
+.quick-navigation-section {
+    width: 100%;
+    background-color: rgb(57, 57, 57);
+}
+
+.quick-navigation-section .col-33 {
+    /* Allows us to calculate position of text relative to image,
+    MDN Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/position */
+    position: relative;
+}
+
+.quick-navigation-section h2 {
+    /* Horizontally and vertically center text within parent */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -100%);
+
+    color: white;
+    font-size: 32px;
+}
+
+.quick-navigation-section .col-33 {
+    height: 250px;
+    transition: background-size 0.25s;
+}
+
+
+/* The URLs here are encoded to prevent the brackets from interpreted as
+CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
+.hoodie-bg {
+    background-image: url("../assets/images/hoodies/hoodie %281%29.jpg");
+    background-size: 100%;
+    background-position: center;
+}
+
+.jumper-bg {
+    background-image: url("../assets/images/jumpers/jumper %281%29.jpg");
+    background-size: 100%;
+    background-position: center;
+}
+
+.tshirt-bg {
+    background-image: url("../assets/images/tshirt/tshirt %281%29.jpg");
+    background-size: 100%;
+    background-position: center;
+}
+
+/* Add a hover effect for improved UX */
+.quick-navigation-section .col-33:hover {
+    background-size: 110%;
+}
+
+.product-section {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.product-section h2 {
+    font-weight: 500;
+    font-size: 40px;
+}
+
+.product-row {
+    width: 1024px;
+    margin: auto;
+}
+
+.product {
+    border: 2px black solid;
+    border-radius: 20px;
+
+    height: min-content;
+    margin: 8px;
+    padding: 4px;
+
+    color: black;
+    
+    transition: scale 0.25s;
+}
+
+.product:hover {
+    scale: 101%;
+}
+
+.product img {
+    padding: 5px;
+    width: 70%;
+}
