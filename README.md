@@ -20,3 +20,6 @@ The cart contains all the items that have been "added to basket" by the user. It
 The MDN documentation was heavily used in the development of this project. Where I have used this resource, I have included a comment in the code with an explaination and a link to how it was used.
 
 I also relied on W3 schools for some other aspects of the project, especially when it comes to using several attributes to perform a task. These instances are also linked in the code documentation.
+
+## Changelog
+The changelog of the project has been provided in the file `changelog.txt`.

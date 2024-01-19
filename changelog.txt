@@ -1,0 +1,46 @@
+commit 465c58289626b5c9464c924f709d4e70e1a1e6c4
+    Adjust directory structure for submission
+
+commit 889865f58c3ec156089a0775e8eded9192c2edf4
+    Finalise all markdown
+
+commit d56d2b4dbe771a05219fc5dcdfca0a6339016b2b
+    Finalise all code changes and documentation
+
+commit e3bf2eca211dbcabacfdd63954754de95d11bdf8
+    Add wireframe designs from figma
+
+commit 22ad336dd1a25e884e98ecfed5d899eb9ffbdfd8
+    Update README
+
+commit 8eb7a616a687ecb800d7abdc5467c47716bacf06
+    Fix all validation errors
+
+commit 73bf0160a78d567c0c99d021ebdf4cdcdab1f0c9
+    Add responsive design to all pages
+
+commit a60ab46eb9fa1e59e5030559cd11a83fc619f900
+    Added button now responds to success
+
+commit 57a1a46281fce67e4d08bec81ec68dbddd75a27e
+    Add Cart and Working Basket
+
+commit 620eea1ec8e8245af27d7206539fd5849329e1a4
+    Add Item Page
+
+commit d14adbe9722d90f848474505457c2ab06d232812
+    Add products page
+
+commit 2bf66801c7fc5246b8af4dc96ded57ae53f1b264
+    Add conversion scripts to get data from product array
+
+commit a3a18e0ed28a8baa16835281cd60f925fecfa633
+    Upload media assets
+
+commit c198a90be3dfbf4cac165f55ca7d6b70e8f63438
+    Add extra styles to index page
+
+commit f053f61c4a9172afbe1552a565e8942e3114d019
+    Create landing page and setup common styles
+    
+    Created index.html and relevant stylesheets.
