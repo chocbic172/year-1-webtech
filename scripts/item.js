@@ -78,6 +78,8 @@ const updateDetails = (title, price, description, image) => {
 }
 
 const addItemToBasket = (title, price) => {
+    const basketButton = document.getElementById("item-cart-button");
+
     // Can't mutate sessionStorage values so create a local copy
     // to edit, then overwrite the sessionStorage value
     const basket = JSON.parse(sessionStorage.getItem("cart"));
@@ -89,4 +91,7 @@ const addItemToBasket = (title, price) => {
     } else {
         sessionStorage.setItem("cart", JSON.stringify([newItem]));
     }
+
+    basketButton.innerHTML = "Added!";
+    basketButton.className = "added";
 }

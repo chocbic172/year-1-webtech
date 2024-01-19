@@ -69,3 +69,13 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 
     cursor: pointer;
 }
+
+.cart-bottom {
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 150px;
+}
+
+.cart-bottom a {
+    color: var(--primary-blue);
+}

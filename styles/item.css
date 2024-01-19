@@ -42,3 +42,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 
     cursor: pointer;
 }
+
+#item-cart-button.added {
+    background-color: var(--forest);
+}
