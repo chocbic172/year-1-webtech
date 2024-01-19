@@ -2,11 +2,19 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 @import url(common.css);
 
+/* 
+  Page container
+*/
+
 .item-content-container {
     max-width: 1024px;
     margin: auto;
     padding-bottom: 150px;
 }
+
+/* 
+  Item attributes
+*/
 
 #item-img {
     max-width: 75%;
@@ -29,6 +37,10 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 #item-desc {
     font-size: 16px;
 }
+
+/* 
+  Add to Basket Button
+*/
 
 #item-cart-button {
     background-color: var(--primary-red);

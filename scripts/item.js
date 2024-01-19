@@ -1,3 +1,6 @@
+// DOMContentLoaded is used to ensure the HTML has finished parsing
+// before we attempt to make any changes to the DOM.
+// MDN Reference: https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event
 document.addEventListener("DOMContentLoaded", function() {
     const productsRaw = document.getElementById('product-data').innerHTML;
     const productsJSON = JSON.parse(productsRaw);
@@ -12,11 +15,20 @@ document.addEventListener("DOMContentLoaded", function() {
     loadItem(urlParams.get("type"), urlParams.get("color"), productsJSON);
 });
 
+/**
+ * Updates the user interface to show the item could not be found
+ */
 const handleNotFound = () => {
     const pageContent = document.getElementById("item-content");
     pageContent.innerHTML = "<h2>This item could not be found!</h2>";
 }
 
+/**
+ * Manipulates the DOM to match the requested item
+ * @param  {[string]}  type of requested item
+ * @param  {[string]}  color of requested item
+ * @param  {[Array]}   data containing all items
+ */
 const loadItem = (type, color, data) => {
     // Switch Case statement is used here for code readability
     // MDN Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
@@ -27,9 +39,16 @@ const loadItem = (type, color, data) => {
 
     const itemTitle = `${item.name} - ${item.color}`;
     updateBreadcrumb(itemTitle);
-    updateDetails(itemTitle, item.price, item.description, item.img);
+    updateItemUI(itemTitle, item.price, item.description, item.img);
 }
 
+/**
+ * Searches for item matching the parameters in `data`
+ * @param  {[string]}  type of item to search for
+ * @param  {[string]}  color of item to search for
+ * @param  {[Array]}   data to be searched
+ * @returns {[object]} item object if found, `undefined` if not
+ */
 const getItemFromData = (type, color, data) => {
     // Hoisting is used to declare a variable before we know what the value is.
     // W3 Reference: https://www.w3schools.com/js/js_hoisting.asp
@@ -55,12 +74,23 @@ const getItemFromData = (type, color, data) => {
     }
 }
 
+/**
+ * Updates the UI with the final breadcrumb title
+ * @param  {[string]} title to be displayed in the breadcrumbs
+ */
 const updateBreadcrumb = (title) => {
     const finalBreadcrumb = document.getElementById('title-breadcrumb');
     finalBreadcrumb.innerHTML = `<a href="#">${title}</a>`;
 }
 
-const updateDetails = (title, price, description, image) => {
+/**
+ * Updates the UI with item details
+ * @param  {[string]} title of the item
+ * @param  {[string]} price of the item
+ * @param  {[string]} description of the item
+ * @param  {[string]} image url of the item
+ */
+const updateItemUI = (title, price, description, image) => {
     const titleElem = document.getElementById("item-title");
     titleElem.innerHTML = title;
 
@@ -77,6 +107,11 @@ const updateDetails = (title, price, description, image) => {
     basketButton.addEventListener("click", () => {addItemToBasket(title, price)});
 }
 
+/**
+ * Adds item to basket in `sessionStorage`
+ * @param  {[string]} title of the item
+ * @param  {[string]} price of the item
+ */
 const addItemToBasket = (title, price) => {
     const basketButton = document.getElementById("item-cart-button");
 

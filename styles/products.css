@@ -2,6 +2,10 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 @import url(common.css);
 
+/* 
+  Quick navigation menu at top of page
+*/
+
 .quick-navigation-section {
     width: 100%;
     background-color: rgb(57, 57, 57);
@@ -29,6 +33,14 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
     transition: background-size 0.25s;
 }
 
+/* Add a hover effect for improved UX */
+.quick-navigation-section .col-33:hover {
+    background-size: 110%;
+}
+
+/* 
+  Image backgrounds for quick navigation menu
+*/
 
 /* The URLs here are encoded to prevent the brackets from interpreted as
 CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
@@ -50,10 +62,9 @@ CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
     background-position: center;
 }
 
-/* Add a hover effect for improved UX */
-.quick-navigation-section .col-33:hover {
-    background-size: 110%;
-}
+/* 
+  Main page container, inc. all products
+*/
 
 .product-section {
     padding-top: 20px;
@@ -88,6 +99,8 @@ CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
     transition: scale 0.25s;
 }
 
+/* Slightly enlarge the product on mouse hover. MDN Ref:
+https://developer.mozilla.org/en-US/docs/Web/CSS/scale */
 .product:hover {
     scale: 101%;
 }
@@ -96,6 +109,10 @@ CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
     padding: 5px;
     width: 70%;
 }
+
+/* 
+  Responsive design
+*/
 
 @media (max-width: 1024px) {
     .product-row {

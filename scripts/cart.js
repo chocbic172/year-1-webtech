@@ -1,3 +1,6 @@
+// DOMContentLoaded is used to ensure the HTML has finished parsing
+// before we attempt to make any changes to the DOM.
+// MDN Reference: https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event
 document.addEventListener("DOMContentLoaded", function() {
     const basket = sessionStorage.getItem("cart");
     const cartListElem = document.getElementById("cart-list");
@@ -11,11 +14,18 @@ document.addEventListener("DOMContentLoaded", function() {
     loadBasket();
 });
 
+/**
+ * Sets the value of the total price element in the page
+ * @param  {[string]} price to be displayed on the UI
+ */
 const setTotalPrice = (price) => {
     const priceElem = document.getElementById("total-price");
     priceElem.innerHTML = `<b>Total Cost:</b> ${price}`;
 }
 
+/**
+ * Updates the UI using the basket information stored in `sessionStorage`
+ */
 const loadBasket = () => {
     const basket = JSON.parse(sessionStorage.getItem("cart"));
     const cartListElem = document.getElementById("cart-list");
@@ -42,6 +52,10 @@ const loadBasket = () => {
     setTotalPrice(`£${totalPrice.toFixed(2)}`);
 }
 
+/**
+ * Remove item from the basket
+ * @param  {[string]} itemName name of the item to be removed
+ */
 const removeItemFromBasket = (itemName) => {
     const basketJSON = sessionStorage.getItem("cart");
 

@@ -2,18 +2,25 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 @import url(common.css);
 
+/* 
+  Page container styles
+*/
+
 .cart-container {
     max-width: 1024px;
     margin: auto;
 }
 
+/* 
+  Styles for the cart "list"
+*/
+
 #cart-list {
     list-style: none;
-
     padding: 0px 40px;
 }
 
-/* "No Items in Basket" prompt */
+/* "No Items in Basket" error */
 #cart-list h2 {
     font-weight: 400;
     text-align: center;
@@ -54,6 +61,10 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
     text-align: right;
     padding: 0px 130px;
 }
+
+/* 
+  Styles the bottom section
+*/
 
 .checkout-button {
     background-color: var(--primary-red);
