@@ -1,0 +1,45 @@
+/* Import common styles. MDN Reference:
+https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
+@import url(common.css);
+
+.item-content-container {
+    max-width: 1024px;
+    margin: auto;
+    padding-bottom: 150px;
+}
+
+#item-img {
+    max-width: 75%;
+    border: 2px black solid;
+    border-radius: 20px;
+}
+
+#item-title {
+    font-size: 32px;
+    margin-bottom: 0;
+}
+
+#item-price {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+#item-desc {
+    font-size: 16px;
+}
+
+#item-cart-button {
+    background-color: var(--primary-red);
+    color: white!important;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 40px;
+    color: inherit;
+    font-size: 16px;
+
+    cursor: pointer;
+}

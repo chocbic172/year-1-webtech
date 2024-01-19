@@ -58,6 +58,7 @@ CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
 .product-section {
     padding-top: 20px;
     text-align: center;
+    padding-bottom: 150px;
 }
 
 .product-section h2 {

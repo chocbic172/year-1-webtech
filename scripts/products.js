@@ -6,67 +6,43 @@ document.addEventListener("DOMContentLoaded", function() {
     loadTshirts(productsJSON);
 });
 
-function sleep(ms) {
-    var start = new Date().getTime(), expire = start + ms;
-    while (new Date().getTime() < expire) { }
-    return;
-}
-
 const loadHoodies = (products) => {
-    const hoodiesContainer = document.getElementById('hoodies-container')
+    const hoodiesContainer = document.getElementById('hoodies-container');
     const hoodiesArray = products.hoodies;
-
-    // Clear container before populating it with new elements
-    hoodiesContainer.innerHTML = "";
-
-    for (const hoodie of hoodiesArray) {
-        hoodiesContainer.innerHTML = hoodiesContainer.innerHTML +
-        `<a href=""><div class="col-33">
-            <div class="product">
-                <img src="assets/${hoodie.img}" alt="Hoodie Image">
-                <p><b>${hoodie.name} - ${hoodie.color}</b></p>
-                <p>${hoodie.description}</p>
-                <p><i>${hoodie.price}</i></p>
-            </div>
-        </div></a>`
-    }
+    loadItem('hoodie', hoodiesContainer, hoodiesArray);
 }
 
 const loadJumpers = (products) => {
-    const jumpersContainer = document.getElementById('jumpers-container')
+    const jumpersContainer = document.getElementById('jumpers-container');
     const jumpersArray = products.jumpers;
-
-    // Clear container before populating it with new elements
-    jumpersContainer.innerHTML = "";
-
-    for (const jumper of jumpersArray) {
-        jumpersContainer.innerHTML = jumpersContainer.innerHTML +
-        `<a href=""><div class="col-33">
-            <div class="product">
-                <img src="assets/${jumper.img}" alt="Jumper Image">
-                <p><b>${jumper.name} - ${jumper.color}</b></p>
-                <p>${jumper.description}</p>
-                <p><i>${jumper.price}</i></p>
-            </div>
-        </div></a>`
-    }
+    loadItem('jumper', jumpersContainer, jumpersArray);
 }
 
 const loadTshirts = (products) => {
     const tshirtsContainer = document.getElementById('tshirts-container')
     const tshirtsArray = products.tshirts;
+    loadItem('tshirt', tshirtsContainer, tshirtsArray);
+}
 
+const loadItem = (type, container, itemArray) => {
     // Clear container before populating it with new elements
-    tshirtsContainer.innerHTML = "";
-
-    for (const tshirt of tshirtsArray) {
-        tshirtsContainer.innerHTML = tshirtsContainer.innerHTML +
-        `<a href=""><div class="col-33">
+    container.innerHTML = "";
+    
+    for (const item of itemArray) {
+        // Use the URLSearchParams object to generate a "get" request to the
+        // item page. MDN Reference:
+        // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+        const itemUrlParams = new URLSearchParams({type: type, color: item.color});
+        const itemUrl = `./item.html?${itemUrlParams.toString()}`
+        
+        const itemTitle = `${item.name} - ${item.color}`;
+    
+        container.innerHTML = container.innerHTML +
+        `<a href="${itemUrl}"><div class="col-33">
             <div class="product">
-                <img src="assets/${tshirt.img}" alt="TShirt Image">
-                <p><b>${tshirt.name} - ${tshirt.color}</b></p>
-                <p>${tshirt.description}</p>
-                <p><i>${tshirt.price}</i></p>
+                <img src="assets/${item.img}" alt="${itemTitle}">
+                <p><b>${itemTitle}</b></p>
+                <p><i>${item.price}</i></p>
             </div>
         </div></a>`
     }

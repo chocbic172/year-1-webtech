@@ -14,7 +14,10 @@
 
 body {
     font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
     margin: 0;
+
+    position: relative;
 }
 
 /* 
@@ -178,6 +181,11 @@ content is horizontally centered */
 footer {
     display: flex;
     align-items: center;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     background-color: var(--primary-grey);
     color: white;
