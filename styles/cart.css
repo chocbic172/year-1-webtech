@@ -1,0 +1,71 @@
+/* Import common styles. MDN Reference:
+https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
+@import url(common.css);
+
+.cart-container {
+    max-width: 1024px;
+    margin: auto;
+}
+
+#cart-list {
+    list-style: none;
+
+    padding: 0px 40px;
+}
+
+/* "No Items in Basket" prompt */
+#cart-list h2 {
+    font-weight: 400;
+    text-align: center;
+}
+
+.cart-item {
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.cart-item-name {
+    float: left;
+}
+
+.cart-item-price {
+    margin-left: auto;
+    padding: 0px 10px;
+}
+
+.cart-item-remove {
+    background-color: var(--primary-red);
+    color: white!important;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 0px 10px;
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+#total-price {
+    text-align: right;
+    padding: 0px 130px;
+}
+
+.checkout-button {
+    background-color: var(--primary-red);
+    color: white!important;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 40px;
+    font-size: 24px;
+
+    margin: auto;
+
+    cursor: pointer;
+}

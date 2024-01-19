@@ -72,4 +72,21 @@ const updateDetails = (title, price, description, image) => {
 
     const imageElem = document.getElementById("item-img");
     imageElem.src = `assets/${image}`;
+
+    const basketButton = document.getElementById("item-cart-button");
+    basketButton.addEventListener("click", () => {addItemToBasket(title, price)});
+}
+
+const addItemToBasket = (title, price) => {
+    // Can't mutate sessionStorage values so create a local copy
+    // to edit, then overwrite the sessionStorage value
+    const basket = JSON.parse(sessionStorage.getItem("cart"));
+    const newItem = {title: title, price: price};
+
+    if (basket) {
+        basket.push(newItem);
+        sessionStorage.setItem("cart", JSON.stringify(basket));
+    } else {
+        sessionStorage.setItem("cart", JSON.stringify([newItem]));
+    }
 }
