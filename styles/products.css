@@ -61,6 +61,10 @@ CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
     padding-bottom: 150px;
 }
 
+.product-section a {
+    color: var(--primary-blue);
+}
+
 .product-section h2 {
     font-weight: 500;
     font-size: 40px;
