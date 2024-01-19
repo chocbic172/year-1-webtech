@@ -1,12 +1,12 @@
-- [ ] Follows brief
+- [x] Follows brief
 - [x] Wireframe
 - [x] Applies HTML Appropriately
 - [x] External CSS Applied consistently
 - [x] Contains Home, Product, Cart and Item "views"
 - [x] Has Iframe for YouTube Video
-- [ ] Has README Following Requirements
+- [x] Has README Following Requirements
 - [ ] Lab Demo
-- [ ] HTML and CSS Pass Validation
+- [x] HTML and CSS Pass Validation
 - [x] Clean and Commented Code
 - [x] Method to Navigate within view
 - [x] Responsive Design
