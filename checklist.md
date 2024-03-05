@@ -1,3 +1,4 @@
+# Semester 1
 - [x] Follows brief
 - [x] Wireframe
 - [x] Applies HTML Appropriately
@@ -5,7 +6,7 @@
 - [x] Contains Home, Product, Cart and Item "views"
 - [x] Has Iframe for YouTube Video
 - [x] Has README Following Requirements
-- [ ] Lab Demo
+- [x] Lab Demo
 - [x] HTML and CSS Pass Validation
 - [x] Clean and Commented Code
 - [x] Method to Navigate within view
@@ -20,3 +21,22 @@
 - [x] Extended Shopping Cart Feature
 - [x] Professional Prototype with No Usability Flaws
 - [x] Version Control
+
+# Semester 2
+- [ ] Lab Demo
+- [ ] README follows requirements
+- [ ] All pages defined with `.php`
+- [ ] Communication with MySQL Database
+- [ ] Live offers presented
+- [ ] Log-in functionality
+- [ ] Personalised Greeting
+- [ ] User registration
+- [ ] Product information from Database
+- [ ] Products can be filtered
+- [ ] Custom 404 page
+- [ ] PHP item page
+- [ ] Product reviews / scores
+- [ ] Verified users can post reviews
+- [ ] Advanced search
+- [ ] Checkout mechanism
+- [ ] Secure password storage / verification
