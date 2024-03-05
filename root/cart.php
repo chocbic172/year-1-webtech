@@ -22,8 +22,8 @@
         <!-- Main navigation section, with links -->
         <div class="navbar-col nav-section-main">
             <div class="navigation-list">
-                <a href="./index.html">Home</a>
-                <a href="./products.html">Products</a>
+                <a href="./index.php">Home</a>
+                <a href="./products.php">Products</a>
                 <a href="#" class="selected">Basket</a>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <button class="checkout-button">Checkout</button>
         <p>
             Forgotten something?
-            <a href="./products.html">Press here to continue shopping</a>
+            <a href="./products.php">Press here to continue shopping</a>
         </p>
     </div>
 

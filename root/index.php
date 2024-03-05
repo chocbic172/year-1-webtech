@@ -23,8 +23,8 @@
         <div class="navbar-col nav-section-main">
             <div class="navigation-list">
                 <a href="#" class="selected">Home</a>
-                <a href="./products.html">Products</a>
-                <a href="./cart.html">Basket</a>
+                <a href="./products.php">Products</a>
+                <a href="./cart.php">Basket</a>
             </div>
         </div>
         <!-- Spacer -->
@@ -37,7 +37,7 @@
             <div class="intro-card">
                 <h2>Welcome to the UCLan Student Shop</h2>
                 <p>To buy some clothes or simply browse the selection, press the button below.</p>
-                <button onclick="location.href = './products.html';">See Products</button>
+                <button onclick="location.href = './products.php';">See Products</button>
             </div>
         </div>
 
@@ -49,15 +49,13 @@
     <!-- Extra information section -->
     <div class="info-section">
         <h2>Welcome to the UCLan Student Union Shop!</h2>
-        <h3>Have a look at the video below for information about UCLan, or go to our <br> <a href="./products.html">products page</a> and see the entire product selection!</h3>
+        <h3>Have a look at the video below for information about UCLan, or go to our <br> <a href="./products.php">products page</a> and see the entire product selection!</h3>
         <div>
             <iframe src="https://www.youtube.com/embed/iTBQHj7L2-8"></iframe>
         </div>
     </div>
 
     <!-- Site footer -->
-    <footer>
-        <img src="assets/images/logo.svg" alt="">
-    </footer>
+    <?php include 'components/footer.php' ?>
 </body>
 </html>

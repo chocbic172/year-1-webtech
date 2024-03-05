@@ -1,3 +1,7 @@
 # Ignore FTP credentials
 *.creds
 !example.creds
+
+# Ignore database credentials
+*.env
+!example.env

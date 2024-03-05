@@ -43,6 +43,6 @@ if (Test-Path $ftp_credentials_file) {
 
 &$winscp_executable /ini=nul /command `
     "open ftp://${ftp_user}:$ftp_pass@$ftp_host" `
-    "synchronize remote $local_source_folder $remote_dest_folder" `
+    "synchronize remote $local_source_folder $remote_dest_folder -delete" `
     "close" `
     "exit"
