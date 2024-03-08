@@ -26,15 +26,15 @@
 - [ ] Lab Demo
 - [ ] README follows requirements
 - [x] All pages defined with `.php`
-- [ ] Communication with MySQL Database
+- [x] Communication with MySQL Database
 - [ ] Live offers presented
 - [ ] Log-in functionality
 - [ ] Personalised Greeting
 - [ ] User registration
-- [ ] Product information from Database
+- [x] Product information from Database
 - [ ] Products can be filtered
 - [ ] Custom 404 page
-- [ ] PHP item page
+- [x] PHP item page
 - [ ] Product reviews / scores
 - [ ] Verified users can post reviews
 - [ ] Advanced search

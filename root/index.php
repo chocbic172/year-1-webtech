@@ -56,6 +56,6 @@
     </div>
 
     <!-- Site footer -->
-    <?php include 'components/footer.php' ?>
+    <?php include 'components/footer.inc.php' ?>
 </body>
 </html>

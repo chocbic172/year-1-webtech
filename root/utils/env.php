@@ -7,5 +7,3 @@
 // https://stackoverflow.com/questions/67963371/load-a-env-file-with-php
 
 $env = parse_ini_file('.env');
-
-?>

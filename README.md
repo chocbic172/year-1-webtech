@@ -7,8 +7,8 @@
 
 ## Example Credentials
 To test the website, the following example credentials can be used:\
-**Username:** testuser\
-**Password:** S3curePa$$w0rd
+**Username:** `testuser`\
+**Password:** `S3curePa$$w0rd`
 
 ## Design Descisions
 TBD

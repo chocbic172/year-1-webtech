@@ -45,19 +45,19 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 /* The URLs here are encoded to prevent the brackets from interpreted as
 CSS. W3 Reference: https://www.w3schools.com/tags/ref_urlencode.ASP */
 .hoodie-bg {
-    background-image: url("../assets/images/hoodies/hoodie %281%29.jpg");
+    background-image: url("../assets/images/items/hoodies/hoodie %281%29.jpg");
     background-size: 100%;
     background-position: center;
 }
 
 .jumper-bg {
-    background-image: url("../assets/images/jumpers/jumper %281%29.jpg");
+    background-image: url("../assets/images/items/jumpers/jumper %281%29.jpg");
     background-size: 100%;
     background-position: center;
 }
 
 .tshirt-bg {
-    background-image: url("../assets/images/tshirt/tshirt %281%29.jpg");
+    background-image: url("../assets/images/items/tshirts/tshirt %281%29.jpg");
     background-size: 100%;
     background-position: center;
 }
