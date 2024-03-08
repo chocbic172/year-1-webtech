@@ -13,23 +13,7 @@
 </head>
 <body>
     <!-- Navigation Bar -->
-    <div class="navbar-clearfix"></div>
-    <div class="navbar">
-        <!-- Navigation logo -->
-        <div class="navbar-col hidden-sm">
-            <p class="nav-logo">UCLan Student Shop</p>
-        </div>
-        <!-- Main navigation section, with links -->
-        <div class="navbar-col nav-section-main">
-            <div class="navigation-list">
-                <a href="#" class="selected">Home</a>
-                <a href="./products.php">Products</a>
-                <a href="./cart.php">Basket</a>
-            </div>
-        </div>
-        <!-- Spacer -->
-        <div class="navbar-col hidden-sm"></div>
-    </div>
+    <?php include 'components/navbar.inc.php' ?>
 
     <!-- Introduction (landing) Section -->
     <div class="intro-section row">

@@ -81,7 +81,22 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/important */
     padding: 4px 24px!important;
 }
 
-.navbar a {
+.nav-logo a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nav-login {
+    padding: 4px 24px !important;
+    text-align: right;
+}
+
+.nav-login a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nav-link {
     color: inherit;
     text-decoration: none;
     text-align: center;
@@ -99,7 +114,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/transition
 https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
 */
 
-.navbar a::after {
+.nav-link::after {
     content: "";
     border-bottom: 2px solid white;
 
@@ -112,12 +127,12 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
     transition: width 0.25s;
 }
 
-.navbar a:hover::after {
+.nav-link:hover::after {
     width: 100%;
 }
 
 /* Underline is always present if the link is "selected" */
-.navbar a.selected::after {
+.nav-link.selected::after {
     transition: none;
     width: 100%;
 }
