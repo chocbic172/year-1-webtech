@@ -1,0 +1,59 @@
+/* Import common styles. MDN Reference:
+https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
+@import url(common.css);
+
+h1 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+h3 {
+    width: 100%;
+    text-align: center;
+}
+
+/* 
+  Login Form
+*/
+
+.login-section {
+    margin: auto;
+}
+
+.text-field {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.form-submit {
+    background-color: var(--primary-red);
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 40px;
+    font-size: 16px;
+
+    margin-top: 10px;
+    width: 100%;
+
+    cursor: pointer;
+}
+
+.login-section p {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.login-section a {
+    color: var(--primary-blue);
+}
