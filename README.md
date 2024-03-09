@@ -11,7 +11,8 @@ To test the website, the following example credentials can be used:\
 **Password:** `S3curePa$$w0rd`
 
 ## Design Descisions
-TBD
+- During registration, we do not ask for a users address. This is to simplify the process and
+  encourage more users to sign up. A users address can instead be saved in the checkout stage.
 
 ## Wider Reading
 W3, MDN, PHP Docs
