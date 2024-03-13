@@ -19,6 +19,7 @@ h3 {
 
 .login-section {
     margin: auto;
+    padding-bottom: 120px;
 }
 
 .text-field {
@@ -56,4 +57,10 @@ h3 {
 
 .login-section a {
     color: var(--primary-blue);
+}
+
+form span {
+    color: var(--primary-red);
+    font-weight: bold;
+    font-size: 0.9em;
 }
