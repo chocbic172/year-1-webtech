@@ -1,23 +1,20 @@
 <?php
-    require('utils/env.php');
+    require("utils/database.php");
+    require("utils/redirect404.php");
 
-    $servername = $env['SQL_DB_HOST'];
-    $username = $env['SQL_DB_USER'];
-    $password = $env['SQL_DB_PASS'];
-    $dbname = $env['SQL_DB_NAME'];
+    use Utils\Database\DBConnection as Database;
+    use function Utils\Redirect404\redirect404;
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $db = new Database();
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    // Check if the required url parameters exist with `isset()`.
+    // PHP Docs: https://www.php.net/manual/en/function.isset.php
+    if (!isset($_GET['id'])) { redirect404(); }
 
-    $sql = "SELECT product_image, product_title, product_type, product_price, product_desc FROM tbl_products WHERE product_id='".$_GET['item']."'";
-    $result = $conn->query($sql);
-
+    $result = $db->getProductInfo($_GET['id']);
     $item = $result->fetch_assoc();
+
+    if (! $result->num_rows > 0) { redirect404(); }
 ?>
 <!DOCTYPE html>
 <html lang="en">
