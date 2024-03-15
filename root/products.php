@@ -1,27 +1,17 @@
 <?php
-function getProductsOfType($productType) {
-    require('utils/env.php');
+require("utils/database.php");
 
-    $servername = $env['SQL_DB_HOST'];
-    $username = $env['SQL_DB_USER'];
-    $password = $env['SQL_DB_PASS'];
-    $dbname = $env['SQL_DB_NAME'];
-    
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+use Utils\Database\DBConnection;
 
-    $sql = "SELECT product_id, product_image, product_title, product_type, product_price FROM tbl_products WHERE product_type='$productType'";
-    $result = $conn->query($sql);
+$db = new DBConnection();
+
+function getProductsOfType(string $productType, DBConnection $db) {
+    $result = $db->getProductsOfType($productType);
 
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
-            echo '<a href="./item.php?item='.$row["product_id"].'"><div class="col-33">'.
+            echo '<a href="./item.php?id='.$row["product_id"].'"><div class="col-33">'.
             '<div class="product">'.
                 '<img src="assets/'.$row["product_image"].'" alt="'.$row["product_title"].'">'.
                 '<p><b>'.$row["product_title"].'</b></p>'.
@@ -82,7 +72,7 @@ function getProductsOfType($productType) {
         <h2>Hoodies</h2>
         <a href="#"><p>Jump to Top</p></a>
         <div class="row product-row" id="hoodies-container">
-            <?php getProductsOfType('UCLan Hoodie'); ?>
+            <?php getProductsOfType('UCLan Hoodie', $db); ?>
         </div>
     </div>
 
@@ -91,7 +81,7 @@ function getProductsOfType($productType) {
         <h2>Jumpers</h2>
         <a href="#"><p>Jump to Top</p></a>
         <div class="row product-row" id="jumpers-container">
-            <?php getProductsOfType('UCLan Logo Jumper'); ?>
+            <?php getProductsOfType('UCLan Logo Jumper', $db); ?>
         </div>
     </div>
     
@@ -100,7 +90,7 @@ function getProductsOfType($productType) {
         <h2>TShirts</h2>
         <a href="#"><p>Jump to Top</p></a>
         <div class="row product-row" id="tshirts-container">
-            <?php getProductsOfType('UCLan Logo Tshirt'); ?>
+            <?php getProductsOfType('UCLan Logo Tshirt', $db); ?>
         </div>
     </div>
 

@@ -1,42 +1,35 @@
 <?php
-    require('utils/env.php');
 
-    $servername = $env['SQL_DB_HOST'];
-    $username = $env['SQL_DB_USER'];
-    $password = $env['SQL_DB_PASS'];
-    $dbname = $env['SQL_DB_NAME'];
+require("utils/database.php");
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+use Utils\Database\DBConnection as Database;
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+$db = new Database();
 
-    // Initialise persistent form data variables
-    $formSubmitted = false;
-    $name = $email = "";
+// Initialise persistent form data variables
+$formSubmitted = false;
+$name = $email = "";
 
-    // The form is submitted using the `POST` method. We detect + handle
-    // that with by checking the `$_SERVER` superglobal. PHP Docs Ref:
-    // https://www.php.net/manual/en/reserved.variables.server.php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $formSubmitted = true;
-        $name = $_POST["name"];
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $repeatPassword = $_POST["repeat-password"];
-        handleFormSubmit();
-    }
+// The form is submitted using the `POST` method. We detect + handle
+// that with by checking the `$_SERVER` superglobal. PHP Docs Ref:
+// https://www.php.net/manual/en/reserved.variables.server.php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $formSubmitted = true;
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $repeatPassword = $_POST["repeat-password"];
+    handleFormSubmit();
+}
 
 
-    /**
-     * Attempts to register a user to the database
-     */
-    function handleFormSubmit() {
+/**
+ * Attempts to register a user to the database
+ */
+function handleFormSubmit() {
 
-    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,6 +83,10 @@
                 if ($formSubmitted) {
                     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         echo "<span>Please enter a valid email!</span>";
+                    }
+
+                    if ($db->emailIsRegistered($email)) {
+                        echo "<span>There is already an account with this email. Please choose another.</span>";
                     }
                 }
             ?>
