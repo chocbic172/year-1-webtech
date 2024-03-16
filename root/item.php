@@ -1,22 +1,22 @@
 <?php
     require("utils/database.php");
-    require("utils/redirect404.php");
+    require("utils/show404.php");
 
-    use Utils\Database\DBConnection as Database;
-    use function Utils\Redirect404\redirect404;
+    use Utils\Database\DBConnection;
+    use function Utils\Show404\show404;
 
-    $db = new Database();
+    $db = new DBConnection();
 
     // Check if the required url parameters exist with `isset()`.
     // PHP Docs: https://www.php.net/manual/en/function.isset.php
-    if (!isset($_GET['id'])) { redirect404(); }
+    if (!isset($_GET['id'])) { show404(); }
 
     $result = $db->getProductInfo($_GET['id']);
     $item = $result->fetch_assoc();
 
-    // Redirect the user to a 404 page if we cannot find the
+    // Render the 404 page if we cannot find the
     // product in the database
-    if (! $result->num_rows > 0) { redirect404(); }
+    if (! $result->num_rows > 0) { show404(); }
 ?>
 <!DOCTYPE html>
 <html lang="en">

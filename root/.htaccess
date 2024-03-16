@@ -2,5 +2,4 @@
   Require all denied
 </Files>
 
-<!-- TODO: Can we calculate this path relative to this file? -->
-ErrorDocument 404 https://vesta.uclan.ac.uk/~ehoward4/webtech1/404.php
+ErrorDocument 404 /~ehoward4/webtech1/404.php
