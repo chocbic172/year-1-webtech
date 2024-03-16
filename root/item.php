@@ -14,6 +14,8 @@
     $result = $db->getProductInfo($_GET['id']);
     $item = $result->fetch_assoc();
 
+    // Redirect the user to a 404 page if we cannot find the
+    // product in the database
     if (! $result->num_rows > 0) { redirect404(); }
 ?>
 <!DOCTYPE html>

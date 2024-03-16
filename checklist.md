@@ -33,7 +33,7 @@
 - [ ] User registration
 - [x] Product information from Database
 - [ ] Products can be filtered
-- [ ] Custom 404 page
+- [x] Custom 404 page
 - [x] PHP item page
 - [ ] Product reviews / scores
 - [ ] Verified users can post reviews
