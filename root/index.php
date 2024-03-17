@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+require("utils/database.php");
+
+use Utils\Database\DBConnection as Database;
+
+$db = new Database();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +29,14 @@
     <div class="intro-section row">
         <div class="col-40 flex-content-center">
             <div class="intro-card">
-                <h2>Welcome to the UCLan Student Shop</h2>
+                <h2>
+                    Welcome to the UCLan Student Shop
+                    <?php
+                    if (isset($_SESSION['user'])) {
+                        echo $db->getUserFullName($_SESSION['user']);
+                    }
+                    ?>
+                </h2>
                 <p>To buy some clothes or simply browse the selection, press the button below.</p>
                 <button onclick="location.href = './products.php';">See Products</button>
             </div>

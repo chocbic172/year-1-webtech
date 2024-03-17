@@ -24,7 +24,7 @@ class DBConnection {
     private $products_table = "tbl_products";
     private $orders_table   = "tbl_orders";
     private $offers_table   = "tbl_offers";
-    private $reviews_table  = "tbl_orders";
+    private $reviews_table  = "tbl_reviews";
     private $users_table    = "tbl_users";
 
     /**
@@ -99,5 +99,49 @@ class DBConnection {
         $sql_query->close();
 
         return ($result->num_rows > 0);
+    }
+    
+    /**
+     * Checks the provided login credentials against the database
+     * 
+     * @param string $email email of user
+     * 
+     * @param string $password password for user
+     * 
+     * @return boolean whether the login attempt was successful
+     */
+    public function attemptLogin(string $email, string $password) {
+        $sql_query = $this->conn->prepare("SELECT * FROM ".$this->users_table." WHERE user_email=?");
+        $sql_query->execute([$email]);
+        
+        $result = $sql_query->get_result();
+        $user = $result->fetch_assoc();
+        $sql_query->close();
+        
+        // No user exists with this email
+        if (! $result->num_rows > 0) { return false; }
+
+
+        // Use the inbuilt `password_verify` function to check whether the plaintext
+        // password matches the hashed version stored in the database.
+        // PHP Docs: https://www.php.net/manual/en/function.password-verify.php
+        if (!password_verify($password, $user['user_pass'])) {
+            return false;
+        }
+
+        // Login was succesful, update session
+        $_SESSION['user'] = $user['user_id'];
+        return true;
+    }
+
+    public function getUserFullName(string $id) {
+        $sql_query = $this->conn->prepare("SELECT user_full_name FROM ".$this->users_table." WHERE user_id=?");
+        $sql_query->execute([$id]);
+        
+        $result = $sql_query->get_result();
+        $sql_query->close();
+        
+        $user = $result->fetch_assoc();
+        return $user['user_full_name'];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require("utils/database.php");
 
@@ -19,15 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
     $repeatPassword = $_POST["repeat-password"];
-    handleFormSubmit();
-}
-
-
-/**
- * Attempts to register a user to the database
- */
-function handleFormSubmit() {
-
 }
 
 ?>

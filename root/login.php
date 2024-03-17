@@ -1,5 +1,26 @@
 <?php
-// TODO: Implement login form handling
+session_start();
+
+require("utils/database.php");
+
+use Utils\Database\DBConnection as Database;
+
+$db = new Database();
+
+$loginAttempted = false;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $loginSuccess = $db->attemptLogin($_POST['email'], $_POST['password']);
+    
+    $loginAttempted = true;
+
+    // Redirect to homepage on success
+    if ($loginSuccess) {
+        header('Location: https://vesta.uclan.ac.uk/~ehoward4/webtech1/index.php');
+        exit();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +48,21 @@
         MDN Docs: https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data
         -->
         <form action="./login.php" method="POST">
+            <?php
+            // If we reach this point in the code and a login has been attempted,
+            // the login attempt has implicitly failed
+            if ($loginAttempted) {
+                echo "<span>Login attempt unsuccessful! Please try again.</span><br><br>";
+            }
+            ?>
             <label for="email" class="form-label">Email</label><br>
-            <input type="email" id="email" name="email" placeholder="Enter Email" class="text-field" required><br>
+            <input type="email" id="email" name="email" placeholder="Enter Email" class="text-field"
+                value="<?php if($loginAttempted) { echo $_POST['email']; } ?>">
+            <br>
 
             <label for="password" class="form-label">Password</label><br>
-            <input type="password" id="password" name="password" placeholder="Enter Password" class="text-field" required><br>
+            <input type="password" id="password" name="password" placeholder="Enter Password" class="text-field">
+            <br>
 
             <input type="submit" value="Log In" class="form-submit">
         </form>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // For conformity to the HTTP spec, we'll change the status code
 // to indicate to the browser that the page could not be found.
 // PHP Docs: https://www.php.net/manual/en/function.http-response-code.php

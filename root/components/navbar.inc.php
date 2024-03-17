@@ -36,10 +36,18 @@ function _generateNavbarLinks() {
 
 /**
  * Generates HTML elements for the navigation bar login link
+ * 
+ * Dynamically changed depending on the session login state.
  *
  * @return string
  */
 function _generateNavbarLogin() {
+    if (isset($_SESSION['user'])) {
+        return '
+        <a href="./signout.php">Sign Out</a>
+        ';
+    }
+
     return '
         <a href="./login.php">Login</a>
     ';
