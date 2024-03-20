@@ -2,24 +2,48 @@
 session_start();
 
 require("utils/database.php");
-
 use Utils\Database\DBConnection as Database;
+
+require("utils/validate.php");
+use function Utils\Validate\verifyEmail;
+use function Utils\Validate\verifyName;
+use function Utils\Validate\verifyPassword;
+use function Utils\Validate\verifyRepeatPassword;
 
 $db = new Database();
 
 // Initialise persistent form data variables
-$formSubmitted = false;
 $name = $email = "";
+
+$nameErrors = $emailErrors = $passwordErrors = $repeatPasswordErrors = "";
 
 // The form is submitted using the `POST` method. We detect + handle
 // that with by checking the `$_SERVER` superglobal. PHP Docs Ref:
 // https://www.php.net/manual/en/reserved.variables.server.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $formSubmitted = true;
     $name = $_POST["name"];
+    $nameErrors = verifyName($name);
+
     $email = $_POST["email"];
+    $emailErrors = verifyEmail($email, $db);
+
     $password = $_POST["password"];
+    $passwordErrors = verifyPassword($password);
+
     $repeatPassword = $_POST["repeat-password"];
+    $repeatPasswordErrors = verifyRepeatPassword($password, $repeatPassword);
+
+    // No error messages implicitly means the validation has passed
+    if (strlen($nameErrors.$emailErrors.$passwordErrors.$repeatPasswordErrors) == 0) {
+        $registerSuccess = $db->registerUser($email, $name, $password);
+
+        if ($registerSuccess) {
+            header('Location: https://vesta.uclan.ac.uk/~ehoward4/webtech1/index.php');
+            exit();
+        }
+
+        $nameErrors .= "<span>Registration has failed. Please reload the page and try again.</span>";
+    }
 }
 
 ?>
@@ -56,63 +80,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         -->
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>">
 
-
-            <!-- Full Name form field + validation -->
+            <!-- Full Name form field -->
             <label for="name" class="form-label">Full Name</label><br>
-            <?php
-                if ($formSubmitted) {
-                    if ($name == "") {
-                        echo "<span>Please enter your full name!</span>";
-                    }
-                }
-            ?>
+            <?php echo $nameErrors ?>
             <input type="text" id="name" name="name" placeholder="Enter Full Name" class="text-field" value="<?php echo $name ?>"><br>
 
-
-            <!-- Email form field + validation -->
+            <!-- Email form field -->
             <label for="email" class="form-label">Email</label><br>
-            <?php
-                if ($formSubmitted) {
-                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        echo "<span>Please enter a valid email!</span>";
-                    }
-
-                    if ($db->emailIsRegistered($email)) {
-                        echo "<span>There is already an account with this email. Please choose another.</span>";
-                    }
-                }
-            ?>
+            <?php echo $emailErrors ?>
             <input type="text" id="email" name="email" placeholder="Enter Email" class="text-field" value="<?php echo $email ?>"><br>
 
-
-            <!-- Password form field + validation -->
+            <!-- Password form field -->
             <label for="password" class="form-label">Password</label><br>
-            <?php
-                if ($formSubmitted) {
-                    if (strlen($password) < 8) {
-                        echo "<span>Please choose another password with at least 8 characters</span><br/>";
-                    }
-                    
-                    if (!preg_match('~[0-9]+~', $password)) {
-                        echo "<span>Please choose another password with  at least 1 number</span><br/>";
-                    }
-                    
-                    if (!(preg_match('~[A-Z]+~', $password) && preg_match('~[a-z]+~', $password))) {
-                        echo "<span>Please choose another password with both uppercase and lowercase letters</span><br/>";
-                    }
-                }
-                ?>
+            <?php echo $passwordErrors ?>
             <input type="password" id="password" name="password" placeholder="Enter Password" class="text-field"><br>
             
-            <!-- Repeated password form field + validation -->
+            <!-- Repeated password form field -->
             <label for="repeat-password" class="form-label">Repeat Password</label><br>
-            <?php
-                if ($formSubmitted) {
-                    if ($password != $repeatPassword) {
-                        echo "<span>Passwords do not match! Please try again.</span>";
-                    }
-                }
-                ?>
+            <?php echo $repeatPasswordErrors ?>
             <input type="password" id="repeat-password" name="repeat-password" placeholder="Repeat Password" class="text-field"><br>
             
             <!-- Form submit button -->

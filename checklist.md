@@ -28,9 +28,9 @@
 - [x] All pages defined with `.php`
 - [x] Communication with MySQL Database
 - [ ] Live offers presented
-- [ ] Log-in functionality
-- [ ] Personalised Greeting
-- [ ] User registration
+- [x] Log-in functionality
+- [x] Personalised Greeting
+- [x] User registration
 - [x] Product information from Database
 - [ ] Products can be filtered
 - [x] Custom 404 page
@@ -39,4 +39,4 @@
 - [ ] Verified users can post reviews
 - [ ] Advanced search
 - [ ] Checkout mechanism
-- [ ] Secure password storage / verification
+- [x] Secure password storage / verification

@@ -134,6 +134,13 @@ class DBConnection {
         return true;
     }
 
+    /**
+     * Get full name of user with `$id`
+     * 
+     * @param string $id of user
+     * 
+     * @return string full name from the database
+     */
     public function getUserFullName(string $id) {
         $sql_query = $this->conn->prepare("SELECT user_full_name FROM ".$this->users_table." WHERE user_id=?");
         $sql_query->execute([$id]);
@@ -143,5 +150,40 @@ class DBConnection {
         
         $user = $result->fetch_assoc();
         return $user['user_full_name'];
+    }
+
+    /**
+     * Registers a user, then logs them into a session
+     * 
+     * @param string $email of user
+     * 
+     * @param string $name of user
+     * 
+     * @param string $password for user
+     * 
+     * @return boolean id of newly registered user, or `false` if the user was not registered
+     */
+    public function registerUser(string $email, string $name, string $password) {
+        // The inbuilt `password_hash` function will take a plaintext string and hash it
+        // using the specified hashing method. `PASSWORD_DEFAULT` uses the blowfish (bcrypt)
+        // hashing algorithm and generates a random salt.
+        // See PHP Docs: https://www.php.net/manual/en/faq.passwords.php
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql_query = $this->conn->prepare("INSERT INTO ".$this->users_table.
+                     " (`user_id`, `user_full_name`, `user_address`, `user_email`, `user_pass`, `user_timestamp`)
+                     VALUES (NULL, ?, '', ?, ?, current_timestamp())");
+        $query_success = $sql_query->execute([$name, $email, $hashedPassword]);
+        
+        
+        if (!$query_success) {
+            $sql_query->close();
+            return false;
+        }
+        
+        $_SESSION['user'] = $sql_query->insert_id;
+
+        $sql_query->close();
+        return true;
     }
 }
