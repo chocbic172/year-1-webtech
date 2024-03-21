@@ -27,7 +27,7 @@
 - [ ] README follows requirements
 - [x] All pages defined with `.php`
 - [x] Communication with MySQL Database
-- [ ] Live offers presented
+- [x] Live offers presented
 - [x] Log-in functionality
 - [x] Personalised Greeting
 - [x] User registration
@@ -38,5 +38,5 @@
 - [ ] Product reviews / scores
 - [ ] Verified users can post reviews
 - [ ] Advanced search
-- [ ] Checkout mechanism
+- [ ] Checkout mechanismthom
 - [x] Secure password storage / verification

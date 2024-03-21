@@ -7,6 +7,8 @@ use Utils\Database\DBConnection as Database;
 
 $db = new Database();
 
+$offers = $db->getActiveOffers();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +26,21 @@ $db = new Database();
 <body>
     <!-- Navigation Bar -->
     <?php include 'components/navbar.inc.php' ?>
+
+    <div class="intro-section row">
+        <?php
+            while ($row = $offers->fetch_assoc()) {
+                echo "
+                <div class='col-33'>
+                    <div class='offer-card'>
+                        <h3>".$row['offer_title']."</h3>
+                        <p>".$row['offer_dec']."</p>
+                    </div>
+                </div>
+                ";
+            } 
+        ?>
+    </div>
 
     <!-- Introduction (landing) Section -->
     <div class="intro-section row">

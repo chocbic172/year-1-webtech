@@ -173,7 +173,7 @@ class DBConnection {
         $sql_query = $this->conn->prepare("INSERT INTO ".$this->users_table.
                      " (`user_id`, `user_full_name`, `user_address`, `user_email`, `user_pass`, `user_timestamp`)
                      VALUES (NULL, ?, '', ?, ?, current_timestamp())");
-        $query_success = $sql_query->execute([$name, $email, $hashedPassword]);
+        $query_success = $sql_query->execute([htmlspecialchars($name), htmlspecialchars($email), $hashedPassword]);
         
         
         if (!$query_success) {
@@ -185,5 +185,15 @@ class DBConnection {
 
         $sql_query->close();
         return true;
+    }
+
+    /**
+     * Returns an SQL query result containing all active offers
+     * 
+     * @return mysqli_result|bool sql query result or `false` if no offers are found
+     */
+    public function getActiveOffers() {
+        $sql_query = $this->conn->query("SELECT * FROM ".$this->offers_table);
+        return $sql_query;
     }
 }

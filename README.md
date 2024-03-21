@@ -15,6 +15,8 @@ To test the website, the following example credentials can be used:\
   encourage more users to sign up. A users address can instead be saved in the checkout stage.
 - Client side (in browser) form validation has been turned off to demonstrate website
   capabilities. In a real deployment it would be beneficial to enable this.
+- Prepared SQL statements are used to generate all user related INSERTs. This prevents SQL
+  injection attacks. We also filter out HTML/XSS attacks by escaping special HTML characters.
 
 ## Wider Reading
 W3, MDN, PHP Docs
