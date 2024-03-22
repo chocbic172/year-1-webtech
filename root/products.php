@@ -7,7 +7,10 @@ use Utils\Database\DBConnection;
 
 $db = new DBConnection();
 
-function generateRating(string $productId, $db) {
+/**
+ * Generates a graphical view of the rating of the item `$productId`
+ */
+function generateRating(string $productId, DBConnection $db) {
     if (intval($db->getRatingForProduct($productId)) > 0) {
         return str_repeat('⭐', intval($db->getRatingForProduct($productId)));
     } else {
@@ -15,13 +18,15 @@ function generateRating(string $productId, $db) {
     }
 }
 
-function getProductsOfType(string $productType, DBConnection $db) {
-    $result = $db->getProductsOfType($productType);
+/**
+ * Generates a collection of HTML products from a `mysqli_result` object
+ */
+function renderProductsFromSQL(mysqli_result $products, DBConnection $db) {
     $output = "";
 
-    if ($result->num_rows > 0) {
+    if ($products->num_rows > 0) {
         // output data of each row
-        while($row = $result->fetch_assoc()) {
+        while($row = $products->fetch_assoc()) {
             $output .= '<a href="./item.php?id='.$row["product_id"].'"><div class="col-33">'.
             '<div class="product">'.
                 '<img src="assets/'.$row["product_image"].'" alt="'.$row["product_title"].'">'.
@@ -38,22 +43,28 @@ function getProductsOfType(string $productType, DBConnection $db) {
     return $output;
 }
 
-function generateProductsSection(string $productType, string $productTitle, DBConnection $db) {
+/**
+ * Generates a "product section" page component
+ */
+function generateProductsSection(mysqli_result $products, string $sectionTitle, DBConnection $db) {
     return '
     <div class="product-section">
-        <h2>'.$productTitle.'</h2>
+        <h2>'.$sectionTitle.'</h2>
         <div class="row product-row">
-            '.getProductsOfType($productType, $db).'
+            '.renderProductsFromSQL($products, $db).'
         </div>
     </div>
     ';
 }
 
+/**
+ * Get ALL products in the database, categorised by item type
+ */
 function getAllProducts(DBConnection $db) {
     $productSections = "";
-    $productSections .= generateProductsSection('UCLan Hoodie', 'Hoodie', $db);
-    $productSections .= generateProductsSection('UCLan Logo Jumper', 'Jumper', $db);
-    $productSections .= generateProductsSection('UCLan Logo TShirt', 'TShirt', $db);
+    $productSections .= generateProductsSection($db->getProductsOfType('UCLan Hoodie'), 'Hoodie', $db);
+    $productSections .= generateProductsSection($db->getProductsOfType('UCLan Logo Jumper'), 'Jumper', $db);
+    $productSections .= generateProductsSection($db->getProductsOfType('UCLan Logo TShirt'), 'TShirt', $db);
     return $productSections;
 }
 
@@ -102,6 +113,15 @@ function getAllProducts(DBConnection $db) {
         </a>
     </div>
 
+    <div class="search-section">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="get">
+            <input type="text" name="q" id="search" class="search-bar"
+             placeholder="Type Search Here..." value="<?php echo isset($_GET['q']) ? $_GET['q']: ''?>">
+
+            <input type="submit" value="Search" class="search-submit">
+        </form>
+    </div>
+
     <!--
     We GET the filter data to the server so it can be navigated through using the browser search history.
     MDN Docs:
@@ -123,13 +143,15 @@ function getAllProducts(DBConnection $db) {
     // is submitted via a URL naviation event, as opposed to through a form.
     // We show all products if a) there is no applied filter or b) the
     // requested type is invalid
-    if (isset($_GET['type'])) {
+    if (isset($_GET['q'])) {
+        echo generateProductsSection($db->getProductsFromSearch($_GET['q']), 'Search Results', $db);
+    } else if (isset($_GET['type'])) {
         if ($_GET['type'] == "hoodies") {
-            echo generateProductsSection('UCLan Hoodie', 'Hoodie', $db);
+            echo generateProductsSection($db->getProductsOfType('UCLan Hoodie'), 'Hoodie', $db);
         } else if ($_GET['type'] == "jumpers") {
-            echo generateProductsSection('UCLan Logo Jumper', 'Jumper', $db);
+            echo generateProductsSection($db->getProductsOfType('UCLan Logo Jumper'), 'Jumper', $db);
         } else if ($_GET['type'] == "tshirts") {
-            echo generateProductsSection('UCLan Logo TShirt', 'TShirt', $db);
+            echo generateProductsSection($db->getProductsOfType('UCLan Logo Tshirt'), 'Tshirt', $db);
         } else {
             echo getAllProducts($db);
         }
@@ -137,7 +159,6 @@ function getAllProducts(DBConnection $db) {
         echo getAllProducts($db);
     }
     ?>
-
 
     <!-- Site footer -->
     <?php include 'components/footer.inc.php' ?>

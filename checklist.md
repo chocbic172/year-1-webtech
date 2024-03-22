@@ -37,6 +37,6 @@
 - [x] PHP item page
 - [x] Product reviews / scores
 - [x] Verified users can post reviews
-- [ ] Advanced search
+- [x] Advanced search
 - [ ] Checkout mechanism
 - [x] Secure password storage / verification

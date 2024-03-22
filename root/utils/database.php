@@ -29,7 +29,7 @@ class DBConnection {
 
     /**
 	 * Connect to the database using the environment configuration
-	*/
+	 */
     public function __construct() {
         require('env.php');
 
@@ -47,7 +47,7 @@ class DBConnection {
 
     /**
 	 * Clean up trailing database connections
-	*/
+	 */
     function __destruct() {
         if ($this->conn) {
             $this->conn->close();
@@ -60,6 +60,21 @@ class DBConnection {
     public function getProductsOfType(string $type) {
         $sql_query = $this->conn->prepare("SELECT * FROM ".$this->products_table." WHERE product_type=?");
         $sql_query->execute([$type]);
+
+        $result = $sql_query->get_result();
+        $sql_query->close();
+        
+        return $result;
+    }
+
+    /**
+	 * Returns all products that match the search query an `sqli_result`
+	*/
+    public function getProductsFromSearch(string $searchQuery) {
+        // The LIKE operator is used here to "search" the database for products with
+        // similar titles. W3 Schools Ref: https://www.w3schools.com/sql/sql_like.asp
+        $sql_query = $this->conn->prepare("SELECT * FROM ".$this->products_table." WHERE product_title LIKE ?");
+        $sql_query->execute(['%'.$searchQuery.'%']);
 
         $result = $sql_query->get_result();
         $sql_query->close();
