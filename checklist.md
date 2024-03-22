@@ -24,7 +24,7 @@
 
 # Semester 2
 - [ ] Lab Demo
-- [ ] README follows requirements
+- [x] README follows requirements
 - [x] All pages defined with `.php`
 - [x] Communication with MySQL Database
 - [x] Live offers presented
