@@ -9,6 +9,30 @@ $db = new Database();
 
 $totalPrice = 0.0;
 
+$userLoggedIn = isset($_SESSION['user']);
+
+$serverMessages = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!$userLoggedIn) {
+        $serverMessages .= "<p>Please log in (use the link in the navbar) to checkout your cart.</p>";
+    }
+    
+    if ((!isset($_SESSION['cart'])) || (count($_SESSION['cart']) < 1)) {
+        $serverMessages .= "<p>Please add some orders to the basket to start checking out your product.</p>";
+        $orderSuccess = false;
+    } else {
+        $orderSuccess = $db->saveOrder($_SESSION['cart']);
+    }
+
+    if ($orderSuccess) {
+        $serverMessages .= "<p>Order successfully submitted! Thank you for shopping!</p>";
+        unset($_SESSION['cart']);
+    } else {
+        $serverMessages .= "<p>Order could not be submitted :( Please refresh and try again.</p>";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +53,9 @@ $totalPrice = 0.0;
 
     <div class="cart-container">
         <h2>Cart</h2>
+        <div class="server-messages">
+            <?php echo $serverMessages ?>
+        </div>
         <hr>
         <ul id="cart-list">
             <?php
@@ -41,7 +68,6 @@ $totalPrice = 0.0;
                     <li><div class="cart-item">
                         <p class="cart-item-name"><a href="item.php?id='.$product.'">'.$productInfo['product_title'].'</a></p>
                         <p class="cart-item-price">£'.$productInfo['product_price'].'</p>
-                        <button class="cart-item-remove">Remove</button>
                     </div></li>';
                 }
                 unset($product);
@@ -55,7 +81,18 @@ $totalPrice = 0.0;
     </div>
 
     <div class="flex-content-center cart-bottom">
-        <button class="checkout-button">Checkout</button>
+        <?php echo $userLoggedIn ? "" : "<h3>Please <a href='./login.php'>log in</a> to checkout your basket!</h3>" ?>
+
+        <!--
+        We use the `$_SERVER["PHP_SELF"]` superglobal to ensure the form is always submitted to this page.
+        However, to avoid XSS exploits we wrap this in `htmlspecialcars()`, which automatically "escapes"
+        all html characters. See W3 Schools for reference implementation:
+        https://www.w3schools.com/php/php_form_validation.asp
+        -->
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
+            <?php echo $userLoggedIn ? '<input type="submit" class="checkout-button" value="Checkout">' : "" ?>
+        </form>
+
         <p>
             Forgotten something?
             <a href="./products.php">Press here to continue shopping</a>

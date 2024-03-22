@@ -38,5 +38,5 @@
 - [x] Product reviews / scores
 - [x] Verified users can post reviews
 - [x] Advanced search
-- [ ] Checkout mechanism
+- [x] Checkout mechanism
 - [x] Secure password storage / verification

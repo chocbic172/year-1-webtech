@@ -304,4 +304,30 @@ class DBConnection {
 
         return $rating[0];
     }
+
+    /**
+     * Stored an order to the database
+     * 
+     * @param array $basket array of product ids to be ordered
+     * 
+     * @return boolean whether the creation of the order was successful
+     */
+    public function saveOrder(array $basket) {
+        $sql_query = $this->conn->prepare("INSERT INTO ".$this->orders_table.
+        " (`order_id`, `order_date`, `user_id`, `product_ids`)
+        VALUES (NULL, current_timestamp(), ?, ?)");
+
+        $query_success = $sql_query->execute([
+            $_SESSION['user'],
+            json_encode($basket),
+        ]);
+
+        if (!$query_success) {
+            $sql_query->close();
+            return false;
+        }
+
+        $sql_query->close();
+        return true;
+    }
 }

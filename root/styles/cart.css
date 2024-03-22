@@ -90,3 +90,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 .cart-bottom a {
     color: var(--primary-blue);
 }
+
+.server-messages {
+    text-align: center;
+    font-size: 1.25em;
+}
