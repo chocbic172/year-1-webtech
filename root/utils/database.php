@@ -268,4 +268,25 @@ class DBConnection {
 
         return $result;
     }
+
+    /**
+     * Gets the average rating of the product with id `$productId`
+     * 
+     * @param string $productId product to find rating for
+     * 
+     * @return float average rating
+     */
+    public function getRatingForProduct(string $productId) {
+        // For berevity, the SQL `AVG` function is used to calculate the average rating
+        // in one query.
+        // W3 Schools Reference Implementation: https://www.w3schools.com/sql/sql_count_avg_sum.asp
+        $sql_query = $this->conn->prepare("SELECT AVG(review_rating) FROM ".$this->reviews_table." WHERE product_id=?");
+        $sql_query->execute([$productId]);
+
+        $result = $sql_query->get_result();
+        $rating = $result->fetch_array();
+        $sql_query->close();
+
+        return $rating[0];
+    }
 }

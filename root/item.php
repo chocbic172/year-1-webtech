@@ -92,7 +92,7 @@
             <div class="col-40">
             <?php
                 echo '<h2 id="item-title">'.$item['product_title'].'</h2>';
-                echo '<p id="item-rating">'.str_repeat('⭐', 4).'</p>';
+                echo '<p id="item-rating">'.str_repeat('⭐', intval($db->getRatingForProduct($productId))).'</p>';
                 echo '<p id="item-price">£'.$item['product_price'].'</p>';
                 echo '<p id="item-desc">'.$item['product_desc'].'</p>';
             ?>

@@ -7,6 +7,14 @@ use Utils\Database\DBConnection;
 
 $db = new DBConnection();
 
+function generateRating(string $productId, $db) {
+    if (intval($db->getRatingForProduct($productId)) > 0) {
+        return str_repeat('⭐', intval($db->getRatingForProduct($productId)));
+    } else {
+        return 'No ratings yet!';
+    }
+}
+
 function getProductsOfType(string $productType, DBConnection $db) {
     $result = $db->getProductsOfType($productType);
     $output = "";
@@ -18,6 +26,7 @@ function getProductsOfType(string $productType, DBConnection $db) {
             '<div class="product">'.
                 '<img src="assets/'.$row["product_image"].'" alt="'.$row["product_title"].'">'.
                 '<p><b>'.$row["product_title"].'</b></p>'.
+                '<p>'.generateRating($row["product_id"], $db).'</p>'.
                 '<p><i>£'.$row["product_price"].'</i></p>'.
             '</div>'.
         '</div></a>';

@@ -35,8 +35,8 @@
 - [x] Products can be filtered
 - [x] Custom 404 page
 - [x] PHP item page
-- [ ] Product reviews / scores
-- [ ] Verified users can post reviews
+- [x] Product reviews / scores
+- [x] Verified users can post reviews
 - [ ] Advanced search
 - [ ] Checkout mechanism
 - [x] Secure password storage / verification
