@@ -18,13 +18,13 @@
     }
 
     function createReview(DBConnection $db) {
-        $product = $_POST["productId"];
-        $title = $_POST["reviewTitle"];
-        $description = $_POST["reviewDescription"];
+        $product = $_POST["product-id"];
+        $title = $_POST["review-title"];
+        $description = $_POST["review-description"];
     
         // Convert the rating to an `integer` so we can check that it's valid
         // PHP Docs: https://www.php.net/manual/en/function.intval.php
-        $rating = intval($_POST["reviewRating"]);
+        $rating = intval($_POST["stars"]);
     
         $db->createReview($product, $title, $description, $rating);
     }
@@ -33,21 +33,23 @@
         if ($_POST['action'] == "cart") {
             addProductToCart($_POST['productId']);
             echo $_SESSION['cart'];
+
+            // Do not render any HTML for a javascript post request
+            exit();
         }
 
         if ($_POST['action'] == "review") {
             createReview($db);
         }
-
-        // Do not render any HTML for a post request
-        exit();
     }
 
     // Check if the required url parameters exist with `isset()`.
     // PHP Docs: https://www.php.net/manual/en/function.isset.php
     if (!isset($_GET['id'])) { show404(); }
 
-    $result = $db->getProductInfo($_GET['id']);
+    $productId = $_GET['id'];
+
+    $result = $db->getProductInfo($productId);
     $item = $result->fetch_assoc();
 
     // Render the 404 page if we cannot find the
@@ -90,6 +92,7 @@
             <div class="col-40">
             <?php
                 echo '<h2 id="item-title">'.$item['product_title'].'</h2>';
+                echo '<p id="item-rating">'.str_repeat('⭐', 4).'</p>';
                 echo '<p id="item-price">£'.$item['product_price'].'</p>';
                 echo '<p id="item-desc">'.$item['product_desc'].'</p>';
             ?>
@@ -98,22 +101,73 @@
         </div>
     </div>
 
-    <div class="item-content">
-        <h2>Reviews</h2>
-        <div>
-            <h3>Review name</h3>
-            <p>*****</p>
-            <p>Review description Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta corporis hic veritatis quod sequi ullam velit. Hic adipisci mollitia expedita libero iusto ipsum, voluptate cupiditate et error delectus earum corporis.</p>
+    <div id="item-content">
+        <div class="row item-content-container">
+            <div class="col-40">
+                <?php if(!isset($_SESSION['user'])) { echo "<h3>Please <a href='login.php'>sign in</a> to leave a review!</h3>"; } ?>
+                <div class="<?php if (!isset($_SESSION['user'])) { echo "blurred"; } ?>">
+                    <h3>Write a Review</h3>
+                    <!--
+                    We use the `$_SERVER["PHP_SELF"]` superglobal to ensure the form is always submitted to this page.
+                    However, to avoid XSS exploits we wrap this in `htmlspecialcars()`, which automatically "escapes"
+                    all html characters. See W3 Schools for reference implementation:
+                    https://www.w3schools.com/php/php_form_validation.asp
+                    -->
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]).'?id='.$productId ?>" method="post">
+                        <input type="hidden" name="action" value="review">
+                        <input type="hidden" name="product-id" value="<?php echo $productId ?>">
+    
+                        <label for="review-title" class="form-label">Review Title</label><br>
+                        <input type="text" name="review-title" id="review-title" class="text-field"><br>
+    
+                        <label for="review-description" class="form-label">Review Description</label><br>
+                        <textarea name="review-description" id="review-description" rows="5" class="text-field"></textarea><br>
+    
+                        <p class="form-label">Choose a rating</p>
+                        <label for="stars">⭐</label>
+                        <input type="radio" name="stars" id="1-star" value="1"><br>
+                        <label for="stars">⭐⭐</label>
+                        <input type="radio" name="stars" id="2-star" value="2"><br>
+                        <label for="stars">⭐⭐⭐</label>
+                        <input type="radio" name="stars" id="3-star" value="3"><br>
+                        <label for="stars">⭐⭐⭐⭐</label>
+                        <input type="radio" name="stars" id="4-star" value="4"><br>
+                        <label for="stars">⭐⭐⭐⭐⭐</label>
+                        <input type="radio" name="stars" id="5-star" value="5"><br>
+    
+                        <br>
+    
+                        <input type="submit" value="Post Review" class="form-submit">
+                    </form>
+                </div>
+            </div>
+            <div class="col-60">
+                <h2>Product Reviews</h2>
+                <hr>
+                <?php
+                $reviews = $db->getReviewsForProduct($productId);
+
+                if ($reviews->num_rows > 0) {
+                    while($review = $reviews->fetch_assoc()) {
+                        echo '
+                        <div>
+                            <h4>'.$review['review_title'].'</h4>
+                            <p>
+                                <span>'.str_repeat('⭐', intval($review['review_rating'])).'</span> 
+                                - Posted by '.$db->getUserFullName($review['user_id']).'
+                            </p>
+                            <p>'.$review['review_desc'].'</p>
+                        </div>
+                        <hr>
+                        ';
+                    }
+                } else {
+                    echo '<p>No reviews found for this product. Why don\'t you leave one using the form to the left?</p>';
+                }
+                ?>
+            </div>
         </div>
     </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 
     <!-- Site footer -->
     <?php include 'components/footer.inc.php' ?>

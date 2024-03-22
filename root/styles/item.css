@@ -60,6 +60,45 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
 }
 
 /* 
+  Review Form
+*/
+
+.text-field {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.form-submit {
+    background-color: var(--primary-red);
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 40px;
+    font-size: 16px;
+
+    margin-top: 10px;
+    width: 80%;
+
+    cursor: pointer;
+}
+
+.blurred {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 
   Responsive Styles
 */
 @media (max-width: 1024px) {
