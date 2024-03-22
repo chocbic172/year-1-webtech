@@ -9,11 +9,12 @@ $db = new DBConnection();
 
 function getProductsOfType(string $productType, DBConnection $db) {
     $result = $db->getProductsOfType($productType);
+    $output = "";
 
     if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
-            echo '<a href="./item.php?id='.$row["product_id"].'"><div class="col-33">'.
+            $output .= '<a href="./item.php?id='.$row["product_id"].'"><div class="col-33">'.
             '<div class="product">'.
                 '<img src="assets/'.$row["product_image"].'" alt="'.$row["product_title"].'">'.
                 '<p><b>'.$row["product_title"].'</b></p>'.
@@ -22,9 +23,31 @@ function getProductsOfType(string $productType, DBConnection $db) {
         '</div></a>';
         }
     } else {
-        echo "<h3>No products of this category could be found!</h3>";
+        $output .= "<h3>No products of this category could be found!</h3>";
     }
+
+    return $output;
 }
+
+function generateProductsSection(string $productType, string $productTitle, DBConnection $db) {
+    return '
+    <div class="product-section">
+        <h2>'.$productTitle.'</h2>
+        <div class="row product-row">
+            '.getProductsOfType($productType, $db).'
+        </div>
+    </div>
+    ';
+}
+
+function getAllProducts(DBConnection $db) {
+    $productSections = "";
+    $productSections .= generateProductsSection('UCLan Hoodie', 'Hoodie', $db);
+    $productSections .= generateProductsSection('UCLan Logo Jumper', 'Jumper', $db);
+    $productSections .= generateProductsSection('UCLan Logo TShirt', 'TShirt', $db);
+    return $productSections;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,54 +70,65 @@ function getProductsOfType(string $productType, DBConnection $db) {
     <p class="breadcrumbs">
         <span><a href="./index.php">Home</a></span>
         <span>></span>
-        <span><a href="#">Products</a></span>
+        <span><a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>">Products</a></span>
     </p>
 
     <!-- Quick Navigation to Sections -->
     <!-- TODO: Make background slightly darker to increase text contrast -->
     <div class="row quick-navigation-section">
-        <a href="#hoodies"><div class="col-33 hoodie-bg">
-            <h2>Hoodies</h2>
-        </div></a>
-        <a href="#jumpers"><div class="col-33 jumper-bg">
-            <h2>Jumpers</h2>
-        </div></a>
-        <a href="#tshirts"><div class="col-33 tshirt-bg">
-            <h2>TShirts</h2>
-        </div></a>
+        <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?type=hoodies" ?>">
+            <div class="col-33 hoodie-bg">
+                <h2>Hoodies</h2>
+            </div>
+        </a>
+        <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?type=jumpers" ?>">
+            <div class="col-33 jumper-bg">
+                <h2>Jumper</h2>
+            </div>
+        </a>
+        <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?type=tshirts" ?>">
+            <div class="col-33 tshirt-bg">
+                <h2>TShirts</h2>
+            </div>
+        </a>
     </div>
 
-    <!-- Hoodies section -->
     <!--
-    The `id` attribute here is used to allows anchor links to be used. This
-    is also used in the other sections. See W3 Reference:
-    https://www.w3docs.com/snippets/html/how-to-create-an-anchor-link-to-jump-to-a-specific-part-of-a-page.html
-    -->
-    <div class="product-section" id="hoodies">
-        <h2>Hoodies</h2>
-        <a href="#"><p>Jump to Top</p></a>
-        <div class="row product-row" id="hoodies-container">
-            <?php getProductsOfType('UCLan Hoodie', $db); ?>
-        </div>
-    </div>
+    We GET the filter data to the server so it can be navigated through using the browser search history.
+    MDN Docs:
+    https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data
 
-    <!-- Jumpers section -->
-    <div class="product-section" id="jumpers">
-        <h2>Jumpers</h2>
-        <a href="#"><p>Jump to Top</p></a>
-        <div class="row product-row" id="jumpers-container">
-            <?php getProductsOfType('UCLan Logo Jumper', $db); ?>
-        </div>
-    </div>
+    We use the `$_SERVER["PHP_SELF"]` superglobal to ensure the form is always submitted to this page.
+    However, to avoid XSS exploits we wrap this in `htmlspecialcars()`, which automatically "escapes"
+    all html characters. See W3 Schools for reference implementation:
+    https://www.w3schools.com/php/php_form_validation.asp
+    -->
+    <!-- <div class="offers-section">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="get">
     
-    <!-- Jumpers section -->
-    <div class="product-section" id="tshirts">
-        <h2>TShirts</h2>
-        <a href="#"><p>Jump to Top</p></a>
-        <div class="row product-row" id="tshirts-container">
-            <?php getProductsOfType('UCLan Logo Tshirt', $db); ?>
-        </div>
-    </div>
+        </form>
+    </div> -->
+
+    <?php
+    // Filter the products using the "type" parameter of a get request. This
+    // is submitted via a URL naviation event, as opposed to through a form.
+    // We show all products if a) there is no applied filter or b) the
+    // requested type is invalid
+    if (isset($_GET['type'])) {
+        if ($_GET['type'] == "hoodies") {
+            echo generateProductsSection('UCLan Hoodie', 'Hoodie', $db);
+        } else if ($_GET['type'] == "jumpers") {
+            echo generateProductsSection('UCLan Logo Jumper', 'Jumper', $db);
+        } else if ($_GET['type'] == "tshirts") {
+            echo generateProductsSection('UCLan Logo TShirt', 'TShirt', $db);
+        } else {
+            echo getAllProducts($db);
+        }
+    } else {
+        echo getAllProducts($db);
+    }
+    ?>
+
 
     <!-- Site footer -->
     <?php include 'components/footer.inc.php' ?>

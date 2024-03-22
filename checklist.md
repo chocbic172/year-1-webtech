@@ -32,11 +32,11 @@
 - [x] Personalised Greeting
 - [x] User registration
 - [x] Product information from Database
-- [ ] Products can be filtered
+- [x] Products can be filtered
 - [x] Custom 404 page
 - [x] PHP item page
 - [ ] Product reviews / scores
 - [ ] Verified users can post reviews
 - [ ] Advanced search
-- [ ] Checkout mechanismthom
+- [ ] Checkout mechanism
 - [x] Secure password storage / verification
