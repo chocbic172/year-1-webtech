@@ -9,6 +9,40 @@
 
     $db = new DBConnection();
 
+    function addProductToCart(string $productId) {
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = array($productId);
+        } else {
+            array_push($_SESSION['cart'], $productId);
+        }
+    }
+
+    function createReview(DBConnection $db) {
+        $product = $_POST["productId"];
+        $title = $_POST["reviewTitle"];
+        $description = $_POST["reviewDescription"];
+    
+        // Convert the rating to an `integer` so we can check that it's valid
+        // PHP Docs: https://www.php.net/manual/en/function.intval.php
+        $rating = intval($_POST["reviewRating"]);
+    
+        $db->createReview($product, $title, $description, $rating);
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_POST['action'] == "cart") {
+            addProductToCart($_POST['productId']);
+            echo $_SESSION['cart'];
+        }
+
+        if ($_POST['action'] == "review") {
+            createReview($db);
+        }
+
+        // Do not render any HTML for a post request
+        exit();
+    }
+
     // Check if the required url parameters exist with `isset()`.
     // PHP Docs: https://www.php.net/manual/en/function.isset.php
     if (!isset($_GET['id'])) { show404(); }
@@ -59,12 +93,54 @@
                 echo '<p id="item-price">£'.$item['product_price'].'</p>';
                 echo '<p id="item-desc">'.$item['product_desc'].'</p>';
             ?>
-            <button id="item-cart-button">Add To Cart</button>
+            <button id="item-cart-button" onclick="addToCart()">Add To Cart</button>
             </div>
         </div>
     </div>
 
+    <div class="item-content">
+        <h2>Reviews</h2>
+        <div>
+            <h3>Review name</h3>
+            <p>*****</p>
+            <p>Review description Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta corporis hic veritatis quod sequi ullam velit. Hic adipisci mollitia expedita libero iusto ipsum, voluptate cupiditate et error delectus earum corporis.</p>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <!-- Site footer -->
     <?php include 'components/footer.inc.php' ?>
+    
+    <script>
+        // Setup some JS constants using PHP
+        const postUrl = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>";
+        const productId = "<?php echo $_GET['id']?>";
+
+        // Send a post request to the PHP backend to add the item to the basket
+        async function addToCart() {
+            const basketButton = document.getElementById("item-cart-button");
+
+            // We emulate submitting a form using the `FormData` API. This ensures
+            // PHP can natively interpret the data we send without any JSON parsing.
+            let formData = new FormData();
+            formData.append('action', 'cart');
+            formData.append('productId', productId);
+
+            const response = await fetch(postUrl, {
+                method: "POST",
+                body: formData
+            })
+
+            basketButton.innerHTML = "Added!";
+            basketButton.className = "added";
+        }
+    </script>
 </body>
 </html>

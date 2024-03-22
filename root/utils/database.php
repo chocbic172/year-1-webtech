@@ -100,6 +100,23 @@ class DBConnection {
 
         return ($result->num_rows > 0);
     }
+
+    /**
+     * Returns boolean describing whether `$productId` exists in the database
+     * 
+     * @param string $productId productId to look for in database
+     * 
+     * @return boolean whether product is in database
+     */
+    public function productIdExists(string $productId) {
+        $sql_query = $this->conn->prepare("SELECT * FROM ".$this->products_table." WHERE product_id=?");
+        $sql_query->execute([$productId]);
+        
+        $result = $sql_query->get_result();
+        $sql_query->close();
+
+        return ($result->num_rows > 0);
+    }
     
     /**
      * Checks the provided login credentials against the database
@@ -161,7 +178,7 @@ class DBConnection {
      * 
      * @param string $password for user
      * 
-     * @return boolean id of newly registered user, or `false` if the user was not registered
+     * @return boolean whether the registration was successful
      */
     public function registerUser(string $email, string $name, string $password) {
         // The inbuilt `password_hash` function will take a plaintext string and hash it
@@ -195,5 +212,60 @@ class DBConnection {
     public function getActiveOffers() {
         $sql_query = $this->conn->query("SELECT * FROM ".$this->offers_table);
         return $sql_query;
+    }
+
+    /**
+     * Registers a user, then logs them into a session
+     * 
+     * @param string $productId of reviwed product
+     * 
+     * @param string $reviewTitle title of review
+     * 
+     * @param string $reviewDescription description of review
+     * 
+     * @param int $reviewRating rating of review, from 1 - 5
+     * 
+     * @return boolean whether the creation of the review was successful
+     */
+    public function createReview(string $productId, string $reviewTitle, string $reviewDescription, int $reviewRating) {
+        // Only logged in users can submit reviews
+        if (!isset($_SESSION['user'])) {
+            return false;
+        }
+
+        $sql_query = $this->conn->prepare("INSERT INTO ".$this->reviews_table.
+        " (`review_id`, `user_id`, `product_id`, `review_title`, `review_desc`, `review_rating`, `review_timestamp`)
+        VALUES (NULL, ?, ?, ?, ?, ?, current_timestamp())");
+
+        $query_success = $sql_query->execute([
+            $_SESSION['user'],
+            $productId,
+            htmlspecialchars($reviewTitle),
+            htmlspecialchars($reviewDescription),
+            $reviewRating,
+        ]);
+
+        if (!$query_success) {
+            $sql_query->close();
+            return false;
+        }
+
+        $sql_query->close();
+        return true;
+    }
+
+    /**
+     * Returns an SQL query result containing all reviews for product `$productId`
+     * 
+     * @return mysqli_result|bool sql query result or `false` if no reviews are found
+     */
+    public function getReviewsForProduct(string $productId) {
+        $sql_query = $this->conn->prepare("SELECT * FROM ".$this->reviews_table." WHERE product_id=?");
+        $sql_query->execute([$productId]);
+        
+        $result = $sql_query->get_result();
+        $sql_query->close();
+
+        return $result;
     }
 }

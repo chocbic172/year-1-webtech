@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+require("utils/database.php");
+
+use Utils\Database\DBConnection as Database;
+
+$db = new Database();
+
+$totalPrice = 0.0;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +30,28 @@
     <div class="cart-container">
         <h2>Cart</h2>
         <hr>
-        <ul id="cart-list"></ul>
+        <ul id="cart-list">
+            <?php
+            // PHP Docs: https://www.php.net/manual/en/control-structures.foreach.php
+            if (isset($_SESSION['cart'])) {
+                foreach ($_SESSION['cart'] as &$product) {
+                    $productInfo = $db->getProductInfo($product)->fetch_assoc();
+                    $totalPrice += floatval($productInfo['product_price']);
+                    echo '
+                    <li><div class="cart-item">
+                        <p class="cart-item-name"><a href="item.php?id='.$product.'">'.$productInfo['product_title'].'</a></p>
+                        <p class="cart-item-price">£'.$productInfo['product_price'].'</p>
+                        <button class="cart-item-remove">Remove</button>
+                    </div></li>';
+                }
+                unset($product);
+            } else {
+                echo "<p>No items currently in cart. Add some from the products page!</p>";
+            }
+            ?>
+        </ul>
         <hr>
-        <p id="total-price"><b>Total Cost:</b> £price</p>
+        <p id="total-price"><b>Total Cost:</b> £<?php echo $totalPrice ?></p>
     </div>
 
     <div class="flex-content-center cart-bottom">
@@ -32,11 +63,6 @@
     </div>
 
     <!-- Site footer -->
-    <footer>
-        <img src="assets/images/logo.svg" alt="">
-    </footer>
-
-    <!-- Import after body has loaded to reduce time to render -->
-    <script src="scripts/cart.js"></script>
+    <?php include 'components/footer.inc.php' ?>
 </body>
 </html>
