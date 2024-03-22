@@ -82,6 +82,11 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/@import */
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
+    transition: scale 0.25s;
+}
+
+.offer-card:hover {
+    scale: 101%;
 }
 
 /* 
